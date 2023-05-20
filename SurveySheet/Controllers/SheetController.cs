@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurveySheet.Controllers.Requests;
 using SurveySheet.Controllers.Responses;
@@ -47,6 +48,7 @@ namespace SurveySheet.Controllers
         /// </summary>
         /// <param name="request">新增物件內容</param>
         /// <returns></returns>
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("Items")]
         public async Task<ActionResult> AddItems([FromBody] AddItemsRequest request)
