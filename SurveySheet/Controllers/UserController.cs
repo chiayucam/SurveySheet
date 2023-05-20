@@ -30,10 +30,37 @@ namespace SurveySheet.Controllers
             {
                 var userDto = new UserDto() { Username = request.UserName, Password = request.Password };
                 var userRoleDto = await UserService.AuthenticateUserAsync(userDto);
-                var token = UserService.GenerateToken(userRoleDto.Role);
+                var token = UserService.GenerateToken(userRoleDto);
 
                 var response = new LoginResponse() { Token = token };
                 return Ok(response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 管理員、用戶註冊
+        /// </summary>
+        /// <param name="request">註冊資訊</param>
+        /// <remarks>
+        /// Roles:
+        /// - 0 Admin
+        /// - 1 User
+        /// </remarks>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("SignUp")]
+        public async Task<ActionResult> SignUp(SignUpRequest request)
+        {
+            try
+            {
+                var userDto = new UserDto() { Username = request.UserName, Password = request.Password };
+                var userRoleDto = new UserRoleDto(userDto, request.Role);
+                await UserService.CreateUserAsync(userRoleDto);
+                return Ok();
             }
             catch (InvalidOperationException ex)
             {

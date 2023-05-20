@@ -7,6 +7,8 @@ namespace SurveySheet.Services.Interfaces
     {
         Task<UserRoleDto> AuthenticateUserAsync(UserDto userDto);
 
-        string GenerateToken(Role role);
+        string GenerateToken(UserRoleDto userRoleDto);
+
+        Task CreateUserAsync(UserRoleDto userRoleDto);
     }
 }

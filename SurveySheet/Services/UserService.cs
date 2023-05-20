@@ -36,14 +36,28 @@ namespace SurveySheet.Services
                 throw new InvalidOperationException("Username or passward failed");
             }
 
-            return new UserRoleDto (userDto, user.Role);
+            return new UserRoleDto(userDto, user.Role, user.Id);
         }
 
-        public string GenerateToken(Role role = Role.User)
+        public async Task CreateUserAsync(UserRoleDto userRoleDto)
+        {
+
+            var user = new User()
+            {
+                Username = userRoleDto.Username,
+                PasswordHash = PasswordHasher.HashPassword(userRoleDto.Username, userRoleDto.Password),
+                Role = userRoleDto.Role
+            };
+
+            await UserRepository.CreateUserAsync(user);
+        }
+
+        public string GenerateToken(UserRoleDto userRoleDto)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, role.ToString())
+                new Claim(ClaimTypes.Role, userRoleDto.Role.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, userRoleDto.Id.ToString())
             };
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:key"]));

@@ -8,7 +8,7 @@ namespace SurveySheet.Repositories.Models
 
         public Role Role { get; set; }
 
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         public string PasswordHash {get; set;}
     }

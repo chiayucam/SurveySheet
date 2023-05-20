@@ -48,7 +48,7 @@ namespace SurveySheet.Controllers
         /// </summary>
         /// <param name="request">新增物件內容</param>
         /// <returns></returns>
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("Items")]
         public async Task<ActionResult> AddItems([FromBody] AddItemsRequest request)
@@ -71,6 +71,7 @@ namespace SurveySheet.Controllers
         /// <param name="id">物件 id</param>
         /// <param name="request">更新物件內容</param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("Item/{id}")]
         public async Task<ActionResult> UpdateItem(int id, [FromBody] UpdateItemRequest request)
@@ -92,6 +93,7 @@ namespace SurveySheet.Controllers
         /// </summary>
         /// <param name="id">物件 id</param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         [Route("Item/{id}")]
         public async Task<ActionResult> DeleteItem(int id)

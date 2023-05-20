@@ -5,5 +5,7 @@ namespace SurveySheet.Repositories.Interfaces
     public interface IUserRepository
     {
         Task<User> GetUserAsync(string username);
+
+        Task CreateUserAsync(User user);
     }
 }
