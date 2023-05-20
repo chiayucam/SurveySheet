@@ -51,9 +51,16 @@ namespace SurveySheet.Controllers
         [Route("Items")]
         public async Task<ActionResult> AddItems([FromBody] AddItemsRequest request)
         {
-            var addItemDtos = request.Items.Select(item => new AddItemDto() { Title = item.Title});
-            await SheetService.AddItemsAsync(addItemDtos);
-            return NoContent();
+            try
+            {
+                var addItemDtos = request.Items.Select(item => new AddItemDto() { Title = item.Title });
+                await SheetService.AddItemsAsync(addItemDtos);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>

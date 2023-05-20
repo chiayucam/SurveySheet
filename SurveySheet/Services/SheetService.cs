@@ -20,7 +20,7 @@ namespace SurveySheet.Services
 
             if (titles.Any(title => title.Length > 50))
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Title length exceeded limit");
             }
 
             var addItems = addItemDtos.Select(dto => new AddItem() { Title = dto.Title });
