@@ -1,6 +1,6 @@
 ﻿using SurveySheet.Services.Models;
 
-namespace SurveySheet.Services
+namespace SurveySheet.Services.Interfaces
 {
     public interface ISheetService
     {
