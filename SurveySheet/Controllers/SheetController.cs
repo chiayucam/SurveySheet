@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurveySheet.Controllers.Requests;
 using SurveySheet.Controllers.Responses;
+using SurveySheet.Extensions;
 using SurveySheet.Services;
 using SurveySheet.Services.Interfaces;
 using SurveySheet.Services.Models;
@@ -106,6 +107,23 @@ namespace SurveySheet.Controllers
             catch (InvalidOperationException ex)
             {
                 return NotFound(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "User,Admin")]
+        [HttpPost]
+        [Route("Item/{id}/Check")]
+        public async Task<ActionResult> CheckItem(int id)
+        {
+            try
+            {
+                var userId = HttpContext.GetUserId();
+                await SheetService.CheckItemAsync(userId!.Value, id);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace SurveySheet.Repositories.Interfaces
 {
-    public interface ISheetRepository
+    public interface IItemRepository
     {
         Task<IEnumerable<Item>> GetInitialItemsAsync(int limit);
 

@@ -6,11 +6,11 @@ using Z.Dapper.Plus;
 
 namespace SurveySheet.Repositories
 {
-    public class SheetRepository : ISheetRepository
+    public class ItemRepository : IItemRepository
     {
         private readonly string ConnectionString;
 
-        public SheetRepository(string connectionString)
+        public ItemRepository(string connectionString)
         {
             ConnectionString = connectionString;
         }

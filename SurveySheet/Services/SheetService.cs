@@ -7,11 +7,14 @@ namespace SurveySheet.Services
 {
     public class SheetService : ISheetService
     {
-        private ISheetRepository SheetRepository;
+        private IItemRepository ItemRepository;
 
-        public SheetService(ISheetRepository sheetRepository)
+        private ICheckedItemRepository CheckedItemRepository;
+
+        public SheetService(IItemRepository itemRepository, ICheckedItemRepository checkedItemRepository)
         {
-            SheetRepository = sheetRepository;
+            ItemRepository = itemRepository;
+            CheckedItemRepository = checkedItemRepository;
         }
 
         public async Task AddItemsAsync(IEnumerable<AddItemDto> addItemDtos)
@@ -24,12 +27,17 @@ namespace SurveySheet.Services
             }
 
             var addItems = addItemDtos.Select(dto => new AddItem() { Title = dto.Title });
-            await SheetRepository.AddItemsAsync(addItems);
+            await ItemRepository.AddItemsAsync(addItems);
+        }
+
+        public async Task CheckItemAsync(int userId, int itemId)
+        {
+            await CheckedItemRepository.CheckItemAsync(userId, itemId);
         }
 
         public async Task DeleteItemAsync(int id)
         {
-            await SheetRepository.DeleteItemAsync(id);
+            await ItemRepository.DeleteItemAsync(id);
         }
 
         public async Task<IEnumerable<ItemDto>> GetItemsAsync(int limit, int? nextCursor)
@@ -38,11 +46,11 @@ namespace SurveySheet.Services
 
             if (nextCursor.HasValue)
             {
-                items = await SheetRepository.GetNextItemsAsync(limit, nextCursor.Value);
+                items = await ItemRepository.GetNextItemsAsync(limit, nextCursor.Value);
             }
             else
             {
-                items = await SheetRepository.GetInitialItemsAsync(limit);
+                items = await ItemRepository.GetInitialItemsAsync(limit);
             };
 
             var itemDtos = items.Select(item => new ItemDto(item));
@@ -52,7 +60,7 @@ namespace SurveySheet.Services
         public async Task UpdateItemAsync(UpdateItemDto updateItemDto)
         {
             var item = new Item() { Id = updateItemDto.Id, Title = updateItemDto.Title };
-            await SheetRepository.UpdateItemAysnc(item);
+            await ItemRepository.UpdateItemAysnc(item);
         }
     }
 }

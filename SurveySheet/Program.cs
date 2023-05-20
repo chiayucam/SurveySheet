@@ -18,7 +18,8 @@ builder.Services.AddSingleton<IUserService, UserService>();
 
 
 var connectionString = builder.Configuration.GetConnectionString("SurveySheet");
-builder.Services.AddSingleton<ISheetRepository>(sp => new SheetRepository(connectionString));
+builder.Services.AddSingleton<IItemRepository>(sp => new ItemRepository(connectionString));
+builder.Services.AddSingleton<ICheckedItemRepository>(sp => new CheckedItemRepository(connectionString));
 builder.Services.AddSingleton<IUserRepository>(sp => new UserRepository(connectionString));
 
 

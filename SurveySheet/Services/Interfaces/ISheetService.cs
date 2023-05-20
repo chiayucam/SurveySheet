@@ -11,5 +11,7 @@ namespace SurveySheet.Services.Interfaces
         Task UpdateItemAsync(UpdateItemDto updateItemDto);
 
         Task DeleteItemAsync(int id);
+
+        Task CheckItemAsync(int userId, int id);
     }
 }

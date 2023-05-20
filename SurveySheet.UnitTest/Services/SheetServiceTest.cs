@@ -14,11 +14,11 @@ namespace SurveySheet.UnitTest.Services
 {
     public class SheetServiceTest
     {
-        private readonly Mock<ISheetRepository> MockSheetRepository;
+        private readonly Mock<IItemRepository> MockSheetRepository;
 
         public SheetServiceTest()
         {
-            MockSheetRepository = new Mock<ISheetRepository>();
+            MockSheetRepository = new Mock<IItemRepository>();
         }
 
         [Fact]
