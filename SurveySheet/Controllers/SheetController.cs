@@ -77,5 +77,25 @@ namespace SurveySheet.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// 刪除表單物件
+        /// </summary>
+        /// <param name="id">物件 id</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("Item/{id}")]
+        public async Task<ActionResult> DeleteItem(int id)
+        {
+            try
+            {
+                await SheetService.DeleteItemAsync(id);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }

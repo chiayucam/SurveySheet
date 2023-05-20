@@ -27,6 +27,11 @@ namespace SurveySheet.Services
             await SheetRepository.AddItemsAsync(addItems);
         }
 
+        public async Task DeleteItemAsync(int id)
+        {
+            await SheetRepository.DeleteItemAsync(id);
+        }
+
         public async Task<IEnumerable<ItemDto>> GetItemsAsync(int limit, int? nextCursor)
         {
             IEnumerable<Item> items;

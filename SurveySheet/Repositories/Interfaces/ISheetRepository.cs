@@ -11,5 +11,7 @@ namespace SurveySheet.Repositories.Interfaces
         Task AddItemsAsync(IEnumerable<AddItem> addItems);
 
         Task UpdateItemAysnc(Item item);
+
+        Task DeleteItemAsync(int id);
     }
 }

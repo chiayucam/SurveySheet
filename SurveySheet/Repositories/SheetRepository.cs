@@ -24,6 +24,24 @@ namespace SurveySheet.Repositories
             conn.BulkInsert(addItems);
         }
 
+        public async Task DeleteItemAsync(int id)
+        {
+            var sql =
+                @"
+                DELETE FROM Item
+                WHERE Id = @Id
+                ";
+
+            using var conn = new SqlConnection(ConnectionString);
+            var param = new { Id = id };
+            var rowsAffected = await conn.ExecuteAsync(sql, param);
+
+            if (rowsAffected == 0)
+            {
+                throw new InvalidOperationException("Delete item not found");
+            }
+        }
+
         public async Task<IEnumerable<Item>> GetInitialItemsAsync(int limit)
         {
             var sql =
