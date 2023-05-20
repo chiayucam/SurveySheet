@@ -4,8 +4,10 @@ namespace SurveySheet.Repositories.Interfaces
 {
     public interface ISheetRepository
     {
-        public Task<IEnumerable<Item>> GetInitialItemsAsync(int limit);
+        Task<IEnumerable<Item>> GetInitialItemsAsync(int limit);
 
-        public Task<IEnumerable<Item>> GetNextItemsAsync(int limit, int nextCursor);
+        Task<IEnumerable<Item>> GetNextItemsAsync(int limit, int nextCursor);
+
+        Task AddItemsAsync(IEnumerable<AddItem> addItems);
     }
 }

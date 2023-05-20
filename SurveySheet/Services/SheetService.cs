@@ -14,6 +14,19 @@ namespace SurveySheet.Services
             SheetRepository = sheetRepository;
         }
 
+        public async Task AddItemsAsync(IEnumerable<AddItemDto> addItemDtos)
+        {
+            var titles = addItemDtos.Select(dto => dto.Title);
+
+            if (titles.Any(title => title.Length > 50))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var addItems = addItemDtos.Select(dto => new AddItem() { Title = dto.Title });
+            await SheetRepository.AddItemsAsync(addItems);
+        }
+
         public async Task<IEnumerable<ItemDto>> GetItemsAsync(int limit, int? nextCursor)
         {
             IEnumerable<Item> items;

@@ -2,6 +2,7 @@
 using SurveySheet.Repositories.Interfaces;
 using SurveySheet.Repositories.Models;
 using System.Data.SqlClient;
+using Z.Dapper.Plus;
 
 namespace SurveySheet.Repositories
 {
@@ -12,6 +13,15 @@ namespace SurveySheet.Repositories
         public SheetRepository(string connectionString)
         {
             ConnectionString = connectionString;
+        }
+
+        public async Task AddItemsAsync(IEnumerable<AddItem> addItems)
+        {
+            DapperPlusManager.Entity<AddItem>().Table("Item");
+
+            using var conn = new SqlConnection(ConnectionString);
+
+            conn.BulkInsert(addItems);
         }
 
         public async Task<IEnumerable<Item>> GetInitialItemsAsync(int limit)
