@@ -17,6 +17,11 @@ namespace SurveySheet.Controllers
             UserService = userService;
         }
 
+        /// <summary>
+        /// 管理員、用戶登入
+        /// </summary>
+        /// <param name="request">登入資訊</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Login")]
         public async Task<ActionResult> Login(LoginRequest request)
