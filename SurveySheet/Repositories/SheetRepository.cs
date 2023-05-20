@@ -58,5 +58,24 @@ namespace SurveySheet.Repositories
 
             return items;
         }
+
+        public async Task UpdateItemAysnc(Item item)
+        {
+            var sql =
+                @"
+                UPDATE Item
+                SET Title = @Title
+                WHERE Id = @Id
+                ";
+
+            using var conn = new SqlConnection(ConnectionString);
+            var param = new {Title = item.Title, Id = item.Id};
+            var rowsAffected = await conn.ExecuteAsync(sql, param);
+
+            if (rowsAffected == 0)
+            {
+                throw new InvalidOperationException("Update item not found");
+            }
+        }
     }
 }

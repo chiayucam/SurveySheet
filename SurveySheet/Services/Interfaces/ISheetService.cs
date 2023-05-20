@@ -7,5 +7,7 @@ namespace SurveySheet.Services.Interfaces
         Task<IEnumerable<ItemDto>> GetItemsAsync(int limit, int? nextCursor);
 
         Task AddItemsAsync(IEnumerable<AddItemDto> addItemDto);
+
+        Task UpdateItemAsync(UpdateItemDto updateItemDto);
     }
 }

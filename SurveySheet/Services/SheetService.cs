@@ -43,5 +43,11 @@ namespace SurveySheet.Services
             var itemDtos = items.Select(item => new ItemDto(item));
             return itemDtos;
         }
+
+        public async Task UpdateItemAsync(UpdateItemDto updateItemDto)
+        {
+            var item = new Item() { Id = updateItemDto.Id, Title = updateItemDto.Title };
+            await SheetRepository.UpdateItemAysnc(item);
+        }
     }
 }

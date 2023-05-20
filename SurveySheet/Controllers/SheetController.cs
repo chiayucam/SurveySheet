@@ -55,5 +55,21 @@ namespace SurveySheet.Controllers
             await SheetService.AddItemsAsync(addItemDtos);
             return NoContent();
         }
+
+        [HttpPut]
+        [Route("Item/{id}")]
+        public async Task<ActionResult> UpdateItem(int id, [FromBody] UpdateItemRequest request)
+        {
+            try
+            {
+                var updateItemDto = new UpdateItemDto() { Id = id, Title = request.Title };
+                await SheetService.UpdateItemAsync(updateItemDto);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }

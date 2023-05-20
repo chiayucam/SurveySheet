@@ -9,5 +9,7 @@ namespace SurveySheet.Repositories.Interfaces
         Task<IEnumerable<Item>> GetNextItemsAsync(int limit, int nextCursor);
 
         Task AddItemsAsync(IEnumerable<AddItem> addItems);
+
+        Task UpdateItemAysnc(Item item);
     }
 }
