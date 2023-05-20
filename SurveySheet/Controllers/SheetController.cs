@@ -45,7 +45,7 @@ namespace SurveySheet.Controllers
         /// <summary>
         /// 新增表單物件
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="request">新增物件內容</param>
         /// <returns></returns>
         [HttpPost]
         [Route("Items")]
@@ -56,6 +56,12 @@ namespace SurveySheet.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// 更新表單物件
+        /// </summary>
+        /// <param name="id">物件 id</param>
+        /// <param name="request">更新物件內容</param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Item/{id}")]
         public async Task<ActionResult> UpdateItem(int id, [FromBody] UpdateItemRequest request)
