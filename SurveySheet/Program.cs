@@ -6,7 +6,6 @@ using SurveySheet.Repositories;
 using SurveySheet.Repositories.Interfaces;
 using SurveySheet.Services;
 using SurveySheet.Services.Interfaces;
-using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
 
