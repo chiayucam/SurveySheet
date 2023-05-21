@@ -8,6 +8,13 @@ namespace SurveySheet.Services.Models
 
         public string Title { get; set; }
 
+        public bool IsChecked { get; set; } = false;
+
+        public ItemDto()
+        {
+
+        }
+
         public ItemDto(Item item)
         {
             Id = item.Id;

@@ -6,7 +6,7 @@ namespace SurveySheet.Extensions
     {
         public static int? GetUserId(this HttpContext context)
         {
-            if (context.User == null)
+            if (context.User.Identity!.IsAuthenticated == false)
             {
                 return null;
             }

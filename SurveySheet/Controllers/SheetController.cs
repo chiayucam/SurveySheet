@@ -31,16 +31,17 @@ namespace SurveySheet.Controllers
         [Route(("Items/{limit}"))]
         public async Task<ActionResult<GetItemsResponse>> GetItems(int limit = 10, [FromQuery] int? nextCursor = null)
         {
-
             try
             {
-                var itemDtos = await SheetService.GetItemsAsync(limit, nextCursor);
+                var userId = HttpContext.GetUserId();
+
+                var itemDtos = await SheetService.GetItemsAsync(limit, nextCursor, userId);
                 var response = new GetItemsResponse(itemDtos);
                 return Ok(response);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -110,6 +111,11 @@ namespace SurveySheet.Controllers
             }
         }
 
+        /// <summary>
+        /// 勾選表單物件
+        /// </summary>
+        /// <param name="id">物件 id</param>
+        /// <returns></returns>
         [Authorize(Roles = "User,Admin")]
         [HttpPost]
         [Route("Item/{id}/Check")]

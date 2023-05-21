@@ -16,9 +16,12 @@ namespace SurveySheet.UnitTest.Services
     {
         private readonly Mock<IItemRepository> MockSheetRepository;
 
+        private readonly Mock<ICheckedItemRepository> MockCheckedItemRepository;
+
         public SheetServiceTest()
         {
             MockSheetRepository = new Mock<IItemRepository>();
+            MockCheckedItemRepository = new Mock<ICheckedItemRepository>();
         }
 
         [Fact]
@@ -31,7 +34,7 @@ namespace SurveySheet.UnitTest.Services
                 new AddItemDto(){Title = title}
             };
 
-            var sheetService = new SheetService(MockSheetRepository.Object);
+            var sheetService = new SheetService(MockSheetRepository.Object, MockCheckedItemRepository.Object);
 
             // Act
             var act = () => sheetService.AddItemsAsync(addItemDtos);

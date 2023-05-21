@@ -40,7 +40,7 @@ namespace SurveySheet.Services
             await ItemRepository.DeleteItemAsync(id);
         }
 
-        public async Task<IEnumerable<ItemDto>> GetItemsAsync(int limit, int? nextCursor)
+        public async Task<IEnumerable<ItemDto>> GetItemsAsync(int limit, int? nextCursor, int? userId = null)
         {
             IEnumerable<Item> items;
 
@@ -54,6 +54,12 @@ namespace SurveySheet.Services
             };
 
             var itemDtos = items.Select(item => new ItemDto(item));
+
+            if (userId.HasValue)
+            {
+                return await PopulateIsCheckedAsync(itemDtos, userId.Value);
+            }
+
             return itemDtos;
         }
 
@@ -61,6 +67,22 @@ namespace SurveySheet.Services
         {
             var item = new Item() { Id = updateItemDto.Id, Title = updateItemDto.Title };
             await ItemRepository.UpdateItemAysnc(item);
+        }
+
+        private async Task<IEnumerable<ItemDto>> PopulateIsCheckedAsync(IEnumerable<ItemDto> itemDtos, int userId)
+        {
+            var start = itemDtos.First().Id;
+            var end = itemDtos.Last().Id;
+
+            var checkedItemIds = (await CheckedItemRepository.GetCheckItemAsync(userId, start, end)).ToHashSet();
+
+            var checkedItemDtos = itemDtos.Select(itemDto =>
+            {
+                var isChecked = checkedItemIds.Contains(itemDto.Id);
+                return new ItemDto() { Id = itemDto.Id, Title = itemDto.Title, IsChecked = isChecked };
+            });
+
+            return checkedItemDtos;
         }
     }
 }
